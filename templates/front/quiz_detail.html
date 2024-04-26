@@ -20,6 +20,15 @@
                             <h4 class="m-b-0">{{correct_percentage}} %</h4>
                             <h4 class="m-b-0">{{in_correct_percentage}} %</h4>
                         </div>
+                        {% if correct_percentage == 0 %}
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        {% else %}
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: {{correct_percentage}}%" aria-valuenow="{{correct_percentage}}" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        {% endif %}
                         <div class="m-t-25">
                             <div class="table-responsive">
                                 <table class="table">

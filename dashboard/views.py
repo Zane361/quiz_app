@@ -10,7 +10,9 @@ def index(request):
 def quiz_create(request):
     if request.method == 'POST':
         name = request.POST.get('name')
-        quiz = models.Quiz.objects.create(name=name, author=request.user)
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        quiz = models.Quiz.objects.create(name=name, author=request.user, start_date=start_date, end_date=end_date)
         return redirect('dashboard:quiz_detail', quiz.code)
     return render(request, 'dashboard/quiz/create.html')
 

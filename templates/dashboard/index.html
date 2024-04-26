@@ -27,6 +27,7 @@
                                             <th scope="col">#</th>
                                             <th scope="col">Nomi</th>
                                             <th scope="col">Savollar soni</th>
+                                            <th scope="col">Holati</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -35,6 +36,11 @@
                                             <th scope="row">{{forloop.counter}}</th>
                                             <td><a href="{% url 'dashboard:quiz_detail' q.code %}">{{q.name}}</a></td>
                                             <td>{{q.all}}</td>
+                                            {% if q.is_active %}
+                                            <td><button class="btn btn-success"></button></td>
+                                            {% else %}
+                                            <td><button class="btn btn-danger"></button></td>
+                                            {% endif %}
                                         </tr>
                                         {% endfor %}
                                     </tbody>
