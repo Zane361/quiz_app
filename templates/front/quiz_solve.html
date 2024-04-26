@@ -1,0 +1,56 @@
+{% extends 'dashboard/base.html' %}
+
+{% block content %}
+<div class="main-content">
+    <div class="page-header">
+        <h2 class="header-title">Quiz</h2>
+        <div class="header-sub-title">
+            <nav class="breadcrumb breadcrumb-dash">
+                <a href="{% url 'dashboard:index' %}" class="breadcrumb-item"><i class="anticon anticon-home m-r-5"></i>Dashboard</a>
+                <a class="breadcrumb-item" href="{% url 'dashboard:quiz_detail' quiz.code %}">Quiz</a>
+                <span class="breadcrumb-item active">{{quiz.name}}</span>
+            </nav>
+        </div>
+    </div>
+    <div class="card">
+        <form id="myForm" action="" method="post">
+            {% csrf_token %}
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Username</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Username kiriting" name="user_name">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Telefon raqam</label>
+                    <input type="text" class="form-control" id="formGroupExampleInput" value="+998" name="phone">
+                </div>
+                <div class="form-group">
+                    <label for="formGroupExampleInput">Email</label>
+                    <input type="email" class="form-control" id="formGroupExampleInput" placeholder="example@gmail.com" name="email">
+                </div>
+                {% for question in questions %}
+                <div class="container">
+                    <div class="d-flex justify-content-between" >
+                        <h2 class="font-weight-normal m-b-10">{{forloop.counter}}. {{question.name}}</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="m-t-25">
+                            {% for option in question.all_options %}
+                            <div class="radio">
+                                <input id="radio{{option.id}}" name="{{question.id}}" type="radio" value="{{option.id}}">
+                                <label for="radio{{option.id}}">{{option.name}}</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>              
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">Yuborish</button>
+
+        </form>
+        
+    </div>
+</div>
+
+{% endblock %}
