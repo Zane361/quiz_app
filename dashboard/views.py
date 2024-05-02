@@ -1,20 +1,24 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from main import models
+from main import models, forms
 
 def index(request):
     quizzes = models.Quiz.objects.filter(author=request.user.id)
     return render(request, 'dashboard/index.html', {'quizzes':quizzes})
 
 def quiz_create(request):
+    form = forms.QuizForm()
     if request.method == 'POST':
-        name = request.POST.get('name')
-        start_date = request.POST.get('start_date')
-        end_date = request.POST.get('end_date')
-        quiz = models.Quiz.objects.create(name=name, author=request.user, start_date=start_date, end_date=end_date)
-        return redirect('dashboard:quiz_detail', quiz.code)
-    return render(request, 'dashboard/quiz/create.html')
+        form = forms.QuizForm(request.POST)
+        if form.is_valid():
+            quiz = form.save(commit=False)
+            quiz.author = request.user
+            quiz.save()
+            return redirect('dashboard:quiz_detail', quiz.code)
+        else:
+            form = forms.QuizForm()
+    return render(request, 'dashboard/quiz/create.html', {'form':form})
 
 def quiz_detail(request, code):
     quiz = models.Quiz.objects.get(code=code)
