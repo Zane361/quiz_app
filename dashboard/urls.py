@@ -13,4 +13,5 @@ urlpatterns = [
     path('question-update/<str:code>/', views.question_update, name='question_update'),
     path('answer-list/<str:code>/', views.answer_list, name='answer_list'),
     path('answer-detail/<str:code>/', views.answer_detail, name='answer_detail'),
+    path('excel-download/<str:code>/', views.excel_download, name='excel_download')
 ]

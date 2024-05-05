@@ -18,7 +18,7 @@ class QuizListCreateView(generics.CreateAPIView):
     authentication_classes = [TokenAuthentication,]
     permission_classes = [IsAdminUser,]
 
-    def perform_create(self, serializer):\
+    def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 

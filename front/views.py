@@ -36,15 +36,15 @@ def quiz_solve(request, code):
 def quiz_detail(request, code):
     answer = models.Answer.objects.get(code=code)
     details = models.AnswerDetail.objects.filter(answer=answer)
+    questions = models.Question.objects.filter(quiz=answer.quiz)
     correct = 0
-    in_correct = 0
+    in_correct = questions.count()
     for detail in details:
         if detail.is_correct:
             correct += 1
-        else:
-            in_correct += 1
+            in_correct -= 1
     try:
-        correct_percentage = int(correct * 100 / details.count())
+        correct_percentage = int(correct * 100 / questions.count())
     except:
         correct_percentage = 0
     in_correct_percentage = 100 - correct_percentage
